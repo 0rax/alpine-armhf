@@ -1,32 +1,32 @@
 #!/bin/sh
 # http://alpinelinux.org/
 set -e
-cd $(dirname $0)
+cd $(dirname $(readlink $0))
 
 # Target Arch
 APKARCH="armhf"
 
 # Alpine APK repository config
-ALPINE_RELEASE=v3.4
+ALPINE_RELEASE=${ALPINE_RELEASE:-edge}
 ALPINE_MIRROR=http://dl-cdn.alpinelinux.org/alpine
 ALPINE_MAIN=${ALPINE_MIRROR}/${ALPINE_RELEASE}/main
 ALPINE_COMMUNITY=${ALPINE_MIRROR}/${ALPINE_RELEASE}/community
 ALPINE_REPOS="${ALPINE_MAIN} ${ALPINE_COMMUNITY}"
 
 # System base package
-BASE_PACKAGE="alpine-baselayout alpine-keys apk-tools libc-utils"
+BASE_PACKAGE=${BASE_PACKAGE:-"alpine-baselayout alpine-keys apk-tools libc-utils"}
 
 # Container build config
-IMGNAME="orax/alpine-${APKARCH}"
-IMGTAG="latest ${ALPINE_RELEASE/v/}"
+IMGNAME=${IMGNAME:-"orax/alpine-${APKARCH}"}
+IMGTAG=${IMGTAG:-"latest ${ALPINE_RELEASE/v/}"}
 DOCKERFILE=Dockerfile
-BUILDOPT="--no-cache --force-rm --quiet"
+BUILDOPT=${BUILDOPT:-"--no-cache --force-rm --quiet"}
 TARNAME=rootfs.tar.gz
 
 # Log Config
-LOGDIR="logs"
+LOGDIR=${LOGDIR:-"logs"}
 DATE=$(date -u '+%Y-%m-%d')
-LOGFILE=${LOGDIR}/${DATE}.log
+LOGFILE=${LOGDIR}/${ALPINE_RELEASE/v/}/${DATE}.log
 
 # Docker labels & tags
 BUILDDATE=$(date -u '+%Y-%m-%d')
