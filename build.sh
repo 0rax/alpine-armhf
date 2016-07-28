@@ -26,7 +26,7 @@ TARNAME=rootfs.tar.gz
 # Log Config
 LOGDIR=${LOGDIR:-"logs"}
 DATE=$(date -u '+%Y-%m-%d')
-LOGFILE=${LOGDIR}/${ALPINE_RELEASE/v/}/${DATE}.log
+LOGFILE=${LOGDIR}/${ALPINE_RELEASE}/${DATE}.log
 
 # Docker labels & tags
 BUILDDATE=$(date -u '+%Y-%m-%d')
