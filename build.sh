@@ -1,7 +1,7 @@
 #!/bin/sh
 # http://alpinelinux.org/
 set -e
-cd $(dirname $(readlink $0))
+cd $(dirname $(readlink $0 || echo $0))
 
 # Target Arch
 APKARCH="armhf"
