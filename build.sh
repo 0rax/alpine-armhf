@@ -16,7 +16,6 @@ ALPINE_REPOS="${ALPINE_MAIN} ${ALPINE_COMMUNITY}"
 # System base package
 BASE_PACKAGE="alpine-baselayout alpine-keys apk-tools libc-utils"
 
-
 # Container build config
 IMGNAME="orax/alpine-${APKARCH}"
 IMGTAG="latest ${ALPINE_RELEASE/v/}"
@@ -45,8 +44,10 @@ ROOTTAR=${TMPDIR}/tar/${TARNAME}
 
 buildlog () {
     mkdir -p $(dirname $LOGFILE)
-    exec 2>${LOGFILE}
-    exec 1>${LOGFILE}
+    >${LOGFILE}
+    exec 2>>${LOGFILE}
+    exec 1>>${LOGFILE}
+    ln -sf ${LOGFILE} $(dirname $LOGFILE)/current.log
 }
 
 buildinfo () {
