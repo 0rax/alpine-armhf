@@ -27,7 +27,7 @@ building () {
 
     # Generate cc.xml
     CCXML_PATH="${LOGDIR}/${ALPINE_RELEASE/v/}/cc.xml"
-    BUILD_NAME="${BADGE_NAME}"
+    BUILD_NAME="alpine-armhf:${ALPINE_RELEASE/v/}"
     BUILD_LABEL=$(date -u '+%Y-%m-%d')
     BUILD_URL="https://armbuild.userctl.xyz/alpine/${ALPINE_RELEASE/v/}/${DATE}.log"
     cc_building
@@ -48,7 +48,7 @@ pass () {
 
     # Generate cc.xml
     CCXML_PATH="${LOGDIR}/${ALPINE_RELEASE/v/}/cc.xml"
-    BUILD_NAME="${BADGE_NAME}"
+    BUILD_NAME="alpine-armhf:${ALPINE_RELEASE/v/}}"
     BUILD_LABEL=$(date -u '+%Y-%m-%d')
     BUILD_URL="https://armbuild.userctl.xyz/alpine/${ALPINE_RELEASE/v/}/${DATE}.log"
     cc_success
@@ -64,7 +64,7 @@ fail () {
 
     # Generate cc.xml
     CCXML_PATH="${LOGDIR}/${ALPINE_RELEASE/v/}/cc.xml"
-    BUILD_NAME="${BADGE_NAME}"
+    BUILD_NAME="alpine-armhf:${ALPINE_RELEASE/v/}"
     BUILD_LABEL=$(date -u '+%Y-%m-%d')
     BUILD_URL="https://armbuild.userctl.xyz/alpine/${ALPINE_RELEASE/v/}/${DATE}.log"
     cc_failure
