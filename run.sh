@@ -26,6 +26,7 @@ building () {
     notify "AlpineLinux $ALPINE_RELEASE is currently building"
 
     # Generate cc.xml
+    CCXML_PATH="${LOGDIR}/${ALPINE_RELEASE/v/}/cc.xml"
     BUILD_NAME="${BADGE_NAME}"
     BUILD_LABEL=$(date -u '+%Y-%m-%d')
     BUILD_URL="https://armbuild.userctl.xyz/alpine/${ALPINE_RELEASE/v/}/${DATE}.log"
@@ -46,6 +47,7 @@ pass () {
     badge_success
 
     # Generate cc.xml
+    CCXML_PATH="${LOGDIR}/${ALPINE_RELEASE/v/}/cc.xml"
     BUILD_NAME="${BADGE_NAME}"
     BUILD_LABEL=$(date -u '+%Y-%m-%d')
     BUILD_URL="https://armbuild.userctl.xyz/alpine/${ALPINE_RELEASE/v/}/${DATE}.log"
@@ -61,6 +63,7 @@ fail () {
     badge_failure
 
     # Generate cc.xml
+    CCXML_PATH="${LOGDIR}/${ALPINE_RELEASE/v/}/cc.xml"
     BUILD_NAME="${BADGE_NAME}"
     BUILD_LABEL=$(date -u '+%Y-%m-%d')
     BUILD_URL="https://armbuild.userctl.xyz/alpine/${ALPINE_RELEASE/v/}/${DATE}.log"

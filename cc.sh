@@ -14,7 +14,7 @@ CCXML='<Projects>
 '
 
 _cc_templating () {
-    printf "${CCXML}" "${BUILD_NAME}" "${BUILD_ACTIVITY}" "${BUILD_STATUS}" "${BUILD_LABEL}" "${BUILD_DATE}" "${BUILD_URL}"
+    printf "${CCXML}" "${BUILD_NAME}" "${BUILD_ACTIVITY}" "${BUILD_STATUS}" "${BUILD_LABEL}" "${BUILD_DATE}" "${BUILD_URL}" > ${CCXML_PATH}
 }
 
 cc_building () {
@@ -25,6 +25,7 @@ cc_building () {
     BUILD_LABEL=${BUILD_LABEL:-$2}
     BUILD_DATE=${BUILD_DATE:-$(date "+%FT%T%z")}
     BUILD_URL=${BUILD_URL:-$3}
+    CCXML_PATH=${CCXML_PATH:-$4}
 
     _cc_templating
 }
@@ -49,6 +50,7 @@ cc_failure () {
     BUILD_LABEL=${BUILD_LABEL:-$2}
     BUILD_DATE=${BUILD_DATE:-$(date "+%FT%T%z")}
     BUILD_URL=${BUILD_URL:-$3}
+    CCXML_PATH=${CCXML_PATH:-$4}
 
     _cc_templating
 }
@@ -61,6 +63,7 @@ cc_exception () {
     BUILD_LABEL=${BUILD_LABEL:-$2}
     BUILD_DATE=${BUILD_DATE:-$(date "+%FT%T%z")}
     BUILD_URL=${BUILD_URL:-$3}
+    CCXML_PATH=${CCXML_PATH:-$4}
 
     _cc_templating
 }
