@@ -32,10 +32,10 @@ building () {
     BUILD_URL="https://armbuild.userctl.xyz/alpine/${ALPINE_RELEASE/v/}/${DATE}.log"
     cc_building
 
-    # Generate Badge
-    BADGE_PATH="${LOGDIR}/${ALPINE_RELEASE/v/}/status.svg"
-    BADGE_NAME="alpine-armhf:${ALPINE_RELEASE/v/}"
-    badge_building
+    # # Generate Badge
+    # BADGE_PATH="${LOGDIR}/${ALPINE_RELEASE/v/}/status.svg"
+    # BADGE_NAME="alpine-armhf:${ALPINE_RELEASE/v/}"
+    # badge_building
 }
 
 pass () {
