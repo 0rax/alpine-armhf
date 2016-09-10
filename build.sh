@@ -6,7 +6,7 @@ cd $(dirname $(readlink $0 || echo $0))
 # Target Arch
 APKARCH="armhf"
 
-# Alpine APK repository config
+# Alpine APK repository config
 ALPINE_RELEASE=${ALPINE_RELEASE:-edge}
 ALPINE_MIRROR=http://dl-cdn.alpinelinux.org/alpine
 ALPINE_MAIN=${ALPINE_MIRROR}/${ALPINE_RELEASE}/main

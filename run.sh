@@ -6,11 +6,15 @@ set -e
 BUILDPATH="/opt/alpine-armhf"
 LOGDIR="${BUILDPATH}/logs"
 
-update_badge () {
-    : ${1?"usage: update-badge BADGE_URL"}
-    BADGE="${LOGDIR}/${ALPINE_RELEASE/v/}/status.svg"
-    wget -qO ${BADGE} ${1}
-}
+# Badge configuration
+BADGE_STYLE="?style=flat-square"
+
+# Build config
+DATE=$(date -u '+%Y-%m-%d')
+
+# Source utilities
+source ${BUILDPATH}/badge.sh
+source ${BUILDPATH}/cc.sh
 
 notify () {
     : ${1?"usage: notify TEXT"}
@@ -18,14 +22,52 @@ notify () {
     echo "[$(date -u '+%H:%M:%S')] [$LEVEL] ${1}" 1>&2
 }
 
+building () {
+    notify "AlpineLinux $ALPINE_RELEASE is currently building"
+
+    # Generate cc.xml
+    CCXML_PATH="${LOGDIR}/${ALPINE_RELEASE/v/}/cc.xml"
+    BUILD_NAME="orax/alpine-armhf:${ALPINE_RELEASE/v/}"
+    BUILD_LABEL=$(date -u '+%Y-%m-%d')
+    BUILD_URL="https://armbuild.userctl.xyz/alpine/${ALPINE_RELEASE/v/}/${DATE}.log"
+    cc_building
+
+    # # Generate Badge
+    # BADGE_PATH="${LOGDIR}/${ALPINE_RELEASE/v/}/status.svg"
+    # BADGE_NAME="alpine-armhf:${ALPINE_RELEASE/v/}"
+    # badge_building
+}
+
 pass () {
     notify "AlpineLinux $ALPINE_RELEASE build passed"
-    update_badge "https://img.shields.io/badge/alpine--armhf:${ALPINE_RELEASE/v/}-passing-green.svg?style=flat-square"
+
+    # Generate Badge
+    BADGE_PATH="${LOGDIR}/${ALPINE_RELEASE/v/}/status.svg"
+    BADGE_NAME="alpine-armhf:${ALPINE_RELEASE/v/}"
+    badge_success
+
+    # Generate cc.xml
+    CCXML_PATH="${LOGDIR}/${ALPINE_RELEASE/v/}/cc.xml"
+    BUILD_NAME="orax/alpine-armhf:${ALPINE_RELEASE/v/}"
+    BUILD_LABEL=$(date -u '+%Y-%m-%d')
+    BUILD_URL="https://armbuild.userctl.xyz/alpine/${ALPINE_RELEASE/v/}/${DATE}.log"
+    cc_success
 }
 
 fail () {
     notify "AlpineLinux $ALPINE_RELEASE build failed" ERROR
-    update_badge "https://img.shields.io/badge/alpine--armhf:${ALPINE_RELEASE/v/}-failing-red.svg?style=flat-square"
+
+    # Generate Badge
+    BADGE_PATH="${LOGDIR}/${ALPINE_RELEASE/v/}/status.svg"
+    BADGE_NAME="alpine-armhf:${ALPINE_RELEASE/v/}"
+    badge_failure
+
+    # Generate cc.xml
+    CCXML_PATH="${LOGDIR}/${ALPINE_RELEASE/v/}/cc.xml"
+    BUILD_NAME="orax/alpine-armhf:${ALPINE_RELEASE/v/}"
+    BUILD_LABEL=$(date -u '+%Y-%m-%d')
+    BUILD_URL="https://armbuild.userctl.xyz/alpine/${ALPINE_RELEASE/v/}/${DATE}.log"
+    cc_failure
 }
 
 # AlpineLinux v3.4
@@ -33,6 +75,8 @@ fail () {
     export LOGDIR
     export ALPINE_RELEASE=v3.4
     export IMGTAG="latest ${ALPINE_RELEASE/v/}"
+    export BUILD_DATE=$(date "+%FT%T%z")
+    building
     ${BUILDPATH}/build.sh && pass || fail
 )
 # AlpineLinux v3.3
@@ -40,6 +84,8 @@ fail () {
     export LOGDIR
     export ALPINE_RELEASE=v3.3
     export IMGTAG=${ALPINE_RELEASE/v/}
+    export BUILD_DATE=$(date "+%FT%T%z")
+    building
     ${BUILDPATH}/build.sh && pass || fail
 )
 # AlpineLinux Edge
@@ -47,5 +93,7 @@ fail () {
     export LOGDIR
     export ALPINE_RELEASE=edge
     export IMGTAG=${ALPINE_RELEASE/v/}
+    export BUILD_DATE=$(date "+%FT%T%z")
+    building
     ${BUILDPATH}/build.sh && pass || fail
 )
