@@ -70,11 +70,20 @@ fail () {
     cc_failure
 }
 
+# AlpineLinux v3.5
+(
+    export LOGDIR
+    export ALPINE_RELEASE=v3.5
+    export IMGTAG="latest ${ALPINE_RELEASE/v/}"
+    export BUILD_DATE=$(date "+%FT%T%z")
+    building
+    ${BUILDPATH}/build.sh && pass || fail
+)
 # AlpineLinux v3.4
 (
     export LOGDIR
     export ALPINE_RELEASE=v3.4
-    export IMGTAG="latest ${ALPINE_RELEASE/v/}"
+    export IMGTAG="${ALPINE_RELEASE/v/}"
     export BUILD_DATE=$(date "+%FT%T%z")
     building
     ${BUILDPATH}/build.sh && pass || fail
